@@ -15,10 +15,10 @@ class Training_ASL():
 
         self._load_data()
 
-    def _load_data(self, words_to_load=5, videos_per_word=100, start_frame=5, end_frame=75):
+    def _load_data(self, videos_per_word=100, start_frame=5, end_frame=75):
         data = []
         labels = []
-        for words in range(words_to_load+1):
+        for words in range(self.num_words):
             for videos in range(videos_per_word):
                 video_array_list = []
                 for frames in range(start_frame, end_frame):
@@ -40,11 +40,11 @@ class Training_ASL():
         #print(data_indices)
         rng.shuffle(data_indices)
 
-        train_split_max = train_split * len(self.data_np)
+        train_split_max = int(train_split * len(self.data_np))
 
-        val_split_max = train_split_max + (len(self.data_np) * val_split)
+        val_split_max = int(train_split_max + (len(self.data_np) * val_split))
 
-        test_split_max = val_split_max + (len(self.data_np) * test_split)
+        test_split_max = int(val_split_max + (len(self.data_np) * test_split))
 
         train_indices = data_indices[0:train_split_max]
         val_indices = data_indices[train_split_max:val_split_max]
@@ -66,14 +66,16 @@ class Training_ASL():
     def build_model(self):
         self.model = Sequential([
             LSTM(32, return_sequences=True, activation='relu', input_shape=(70,1662)),
-            LSTM(32, return_sequences=False),
+            LSTM(64, return_sequences=True, activation='relu'),
+            LSTM(64, return_sequences=False),
+            Dense(128, activation='relu'),
             Dense(32, activation='relu'),
             Dense(self.num_words, activation='softmax')
         ])
         self.model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
     def train(self):
-        self.history = self.model.fit(self.x_train, self.y_train, epochs=50, batch_size=32)
+        self.history = self.model.fit(self.x_train, self.y_train, epochs=500, batch_size=64, validation_data=(self.x_val, self.y_val))
     
     def evaluate_test(self):
         results = self.model.evaluate(self.x_test, self.y_test)
