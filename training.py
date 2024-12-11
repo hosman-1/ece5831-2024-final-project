@@ -1,5 +1,6 @@
 import numpy as np
 import os
+import matplotlib.pyplot as plt
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import LSTM, Dense
 from tensorflow.keras.utils import to_categorical
@@ -75,7 +76,33 @@ class Training_ASL():
         self.model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
     def train(self):
-        self.history = self.model.fit(self.x_train, self.y_train, epochs=500, batch_size=64, validation_data=(self.x_val, self.y_val))
+        self.history = self.model.fit(self.x_train, self.y_train, epochs=200, batch_size=32, validation_data=(self.x_val, self.y_val))
+
+    def plot_loss(self):
+        history_dict = self.history.history
+        loss_values = history_dict["loss"]
+        val_loss_values = history_dict["val_loss"]
+        epochs = range(1, len(loss_values) + 1)
+        plt.plot(epochs, loss_values, "r--", label="Training loss")
+        plt.plot(epochs, val_loss_values, "b", label="Validation loss")
+        plt.title("Training and Validation Loss")
+        plt.xlabel("Epochs")
+        plt.ylabel("Loss")
+        plt.legend()
+        plt.show()
+    
+    def plot_accuracy(self):
+        history_dict = self.history.history
+        acc = history_dict["accuracy"]
+        val_acc = history_dict["val_accuracy"]
+        epochs = range(1, len(acc) + 1)
+        plt.plot(epochs, acc, "r--", label="Training acc")
+        plt.plot(epochs, val_acc, "b", label="Validation acc")
+        plt.title("Training and Validation Accuracy")
+        plt.xlabel("Epochs")
+        plt.ylabel("Accuracy")
+        plt.legend()
+        plt.show()
     
     def evaluate_test(self):
         results = self.model.evaluate(self.x_test, self.y_test)
