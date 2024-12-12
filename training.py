@@ -67,7 +67,7 @@ class Training_ASL():
     def build_model(self):
         self.model = Sequential([
             LSTM(32, return_sequences=True, activation='relu', input_shape=(70,1662)),
-            LSTM(64, return_sequences=True, activation='relu'),
+            LSTM(64, return_sequences=True, activation='relu',),
             LSTM(64, return_sequences=False),
             Dense(128, activation='relu'),
             Dense(32, activation='relu'),
@@ -76,7 +76,7 @@ class Training_ASL():
         self.model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
     def train(self):
-        self.history = self.model.fit(self.x_train, self.y_train, epochs=200, batch_size=32, validation_data=(self.x_val, self.y_val))
+        self.history = self.model.fit(self.x_train, self.y_train, epochs=125, batch_size=64, validation_data=(self.x_val, self.y_val))
 
     def plot_loss(self):
         history_dict = self.history.history
