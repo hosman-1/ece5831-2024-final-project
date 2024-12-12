@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import LSTM, Dense
 from tensorflow.keras.utils import to_categorical
+import tensorflow as tf
 
 class Training_ASL():
     num_videos = 100
@@ -66,11 +67,13 @@ class Training_ASL():
 
     def build_model(self):
         self.model = Sequential([
-            LSTM(32, return_sequences=True, activation='relu', input_shape=(70,1662)),
-            LSTM(64, return_sequences=True, activation='relu',),
-            LSTM(64, return_sequences=False),
+            LSTM(16, return_sequences=True, activation='relu', input_shape=(70,1662)),
+            LSTM(16, return_sequences=True, activation='relu',),
+            LSTM(32, return_sequences=True, activation='relu',),
+            LSTM(32, return_sequences=True, activation='relu',),
+            LSTM(16, return_sequences=False),
             Dense(128, activation='relu'),
-            Dense(32, activation='relu'),
+            Dense(64, activation='relu'),
             Dense(self.num_words, activation='softmax')
         ])
         self.model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
