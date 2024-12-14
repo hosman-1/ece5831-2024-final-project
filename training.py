@@ -4,27 +4,30 @@ import matplotlib.pyplot as plt
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import LSTM, Dense
 from tensorflow.keras.utils import to_categorical
+from tensorflow.keras.optimizers import SGD
 import tensorflow as tf
 
 class Training_ASL():
-    num_videos = 100
-    videos_base_dir = 'video_data'
+    NUM_VIDEOS = 100
+    NUM_LANDMARKS = 1662
+    VIDEOS_BASE_DIR = 'video_data'
 
     def __init__(self, start_frames=5, end_frames=75, num_words=5):
         self.num_words = num_words
         self.start_frames = start_frames
         self.end_frames = end_frames
+        self.num_frames = self.end_frames - self.start_frames
 
-        self._load_data()
+        self._load_data(start_frame=self.start_frames, end_frame=self.end_frames)
 
-    def _load_data(self, videos_per_word=100, start_frame=5, end_frame=75):
+    def _load_data(self, start_frame=5, end_frame=75):
         data = []
         labels = []
         for words in range(self.num_words):
-            for videos in range(videos_per_word):
+            for videos in range(self.NUM_VIDEOS):
                 video_array_list = []
                 for frames in range(start_frame, end_frame):
-                    numpy_array_file_path = os.path.join(self.videos_base_dir,f'{words}',f'{videos}', 'landmarks', f'{words}_{videos}_{frames}.npy')
+                    numpy_array_file_path = os.path.join(self.VIDEOS_BASE_DIR,f'{words}',f'{videos}', 'landmarks', f'{words}_{videos}_{frames}.npy')
                     temp_array = np.load(numpy_array_file_path)
                     #print(f'Loading {numpy_array_file_path}')
                     video_array_list.append(temp_array)
@@ -67,19 +70,17 @@ class Training_ASL():
 
     def build_model(self):
         self.model = Sequential([
-            LSTM(16, return_sequences=True, activation='relu', input_shape=(70,1662)),
-            LSTM(16, return_sequences=True, activation='relu',),
-            LSTM(32, return_sequences=True, activation='relu',),
-            LSTM(32, return_sequences=True, activation='relu',),
-            LSTM(16, return_sequences=False),
-            Dense(128, activation='relu'),
+            LSTM(32, dropout=0.2, seed = 0, return_sequences=True, input_shape=(self.num_frames,self.NUM_LANDMARKS)),
+            LSTM(64, dropout=0.2, seed = 0, return_sequences=True),
+            LSTM(128, dropout=0.2, seed = 0, return_sequences=True),
+            LSTM(32, dropout=0.2, seed = 0, return_sequences=False),
             Dense(64, activation='relu'),
             Dense(self.num_words, activation='softmax')
         ])
         self.model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
     def train(self):
-        self.history = self.model.fit(self.x_train, self.y_train, epochs=125, batch_size=64, validation_data=(self.x_val, self.y_val))
+        self.history = self.model.fit(self.x_train, self.y_train, epochs=125, batch_size=32, validation_data=(self.x_val, self.y_val))
 
     def plot_loss(self):
         history_dict = self.history.history
@@ -115,7 +116,7 @@ class Training_ASL():
         self.model.save(filepath=save_path)
 
     def predict(self, video_array, label):
-        prediction = np.argmax(self.model.predict(video_array.reshape((1,70,1662))))
+        prediction = np.argmax(self.model.predict(video_array.reshape((1,self.num_frames,self.NUM_LANDMARKS))))
         if prediction == label:
             print(f'Successfully predicted {prediction}, which matches the label {label}')
         else:
