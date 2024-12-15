@@ -1,0 +1,11 @@
+﻿0,book
+1,drink
+2,computer
+3,before
+4,chair
+5,who
+6,go
+7,yes
+8,no
+9,thanks
+10,please
