@@ -1,4 +1,4 @@
-﻿0,book
+0,book
 1,drink
 2,computer
 3,before
