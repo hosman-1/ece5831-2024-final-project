@@ -32,10 +32,11 @@ class Preprocess_ASL():
     #            print(video_file_path)
     #            print(video_dir)
                 if os.path.exists(frames_dir) is False:
-                    print(f'Creating new frames directory {frames_dir}')
+                    #print(f'Creating new frames directory {frames_dir}')
                     os.makedirs(frames_dir)
                 else:
-                    print(f'{frames_dir} already exists')
+                    pass
+                    #print(f'{frames_dir} already exists')
                 
                 # Open video capture of current video
                 cap = cv2.VideoCapture(video_file_path)
@@ -51,7 +52,7 @@ class Preprocess_ASL():
 
                     # Save frames to frame_file_path
                     frame_file_path = os.path.join(frames_dir, f'{word_id}_{video_id}_{frame_num}.png')
-                    print(f'saving frame {word_id}_{video_id}_{frame_num}.png to {frame_file_path}')
+                    #print(f'saving frame {word_id}_{video_id}_{frame_num}.png to {frame_file_path}')
                     cv2.imwrite(frame_file_path, frame)
                     frame_num += 1
                     frame_count += 1
@@ -163,9 +164,10 @@ class Preprocess_ASL():
                 points_base_dir = os.path.join('video_data',f'{word_id}', f'{video_id}', 'landmarks')
                 if os.path.exists(points_base_dir) is False:
                     os.makedirs(points_base_dir)
-                    print(f'creating {points_base_dir}')
+                    #print(f'creating {points_base_dir}')
                 else:
-                    print(f'{points_base_dir} already exists')
+                    pass
+                    #print(f'{points_base_dir} already exists')
                 
                 # Extract landmark points of each frame
                 for num_frame in range(self.frames_per_video):
