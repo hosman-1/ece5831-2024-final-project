@@ -1,6 +1,6 @@
 # ECE-5831 - Pattern Recognition and Neural Networks Final Project
 ## Using Kaggle Dataset:
-In the report and presentation (linked at the end of this README), I mention two approaches. The first one is the Kaggle dataset approach which failed. I created a separate repository for that one since it would make this repository too big and disorganized. The link to that repository is here:
+In the report and presentation (linked at the end of this README), I mention two approaches. The first one is the Kaggle dataset approach which failed. I created a separate repository for that one since it would make this repository too big and disorganized. The link to that repository is [here](https://github.com/hosman-1/ece5831-project-failed)
 
 ## Using Custom Dataset:
 The repository here is for the second approach, which is by creating my own custom dataset.
@@ -22,8 +22,9 @@ Here I will explain what each file is:
 
 ## External Links:
 In this section are links to the presentation video, presentation, report, custom dataset (for kaggle one, go to the other repository. It is also in the same google drive folder as this dataset), and demo video.
-1. __Presentation Video:__
-2. __Presentation:__
-3. __Report:__
-4. __Custom Dataset:__
-5. __Demo Video:__
+1. __Presentation Video:__ [Link](https://youtu.be/y3EGdE80u74)
+2. __Presentation:__ [Link](https://docs.google.com/presentation/d/1QyfIuLRMbldTGwg5HuSDN_agdpczvv_djvZfGYrBI6w/edit?usp=sharing)
+3. __Report:__ [Link](https://drive.google.com/file/d/1RItNzhd6pOQZ_gZghmhS16FXc6LV-2Ev/view?usp=sharing)
+4. __Custom Dataset:__ [Link](https://drive.google.com/file/d/1xNfAH_7lifdN-dyBdPI3FScjSefWJvk0/view?usp=sharing)
+5. __Comprehensive Demo Video:__ [Link](https://youtu.be/X_iXuet0y6E)
+6. __Google Drive Folder:__ [Link](https://drive.google.com/drive/folders/1qWAlCqedrBtXhsuGGBNwXs2KApk9t1WF?usp=sharing)
