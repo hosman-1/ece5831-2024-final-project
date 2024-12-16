@@ -106,7 +106,7 @@ def main():
 
     # codec and VideoWriter for saving the video
     fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-    out_video = cv2.VideoWriter("live_asl_demo3.mp4", fourcc, 15, (frame_width, frame_height))
+    out_video = cv2.VideoWriter("live_asl_demo.mp4", fourcc, 15, (frame_width, frame_height))
     frames_sequence = []
     full_sentence = ''
     while True:
