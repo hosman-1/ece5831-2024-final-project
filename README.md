@@ -1,5 +1,5 @@
-# ECE-5831 - Pattern Recognition and Neural Networks Final Project
-## Using Kaggle Dataset:
+# ECE-5831 - Final Project
+## Using Online Dataset:
 In the report and presentation (linked at the end of this README), I mention two approaches. The first one is the Kaggle dataset approach which failed. I created a separate repository for that one since it would make this repository too big and disorganized. The link to that repository is [here](https://github.com/hosman-1/ece5831-project-failed)
 
 ## Using Custom Dataset:
