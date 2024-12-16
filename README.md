@@ -19,6 +19,8 @@ Here I will explain what each file is:
 10. __asl_words_3words_model_87acc.keras:__ This is the model I trained when I tested the training code with 3 words. It achieved 87% accuracy so I knew my custom data was working.
 11. __asl_words_6words_2L2D_91acc.keras:__ This is the model I trained when I tested the training code with 6 words. It is 2 LSTM layers and 2 Dense layers. It achieved 91% accuracy.
 12. __asl_11words_model_4L2D_93acc.keras:__ This is the model I trained when I tested the training code with 11 words. It is 4 LSTM layers and 2 Dense layers. It achieved 93% accuracy.
+13. __final-project.ipynb:__ This is a notebook with cells that represent this approach in the project. It covers pre-processing, training, evaluating, and finally predicting words using the model on a live video feed.
+14. __final-project-notebook-model.keras:__ This is the model generated using the final-project.ipynb notebook.
 
 ## External Links:
 In this section are links to the presentation video, presentation, report, custom dataset (for kaggle one, go to the other repository. It is also in the same google drive folder as this dataset), and demo video.
