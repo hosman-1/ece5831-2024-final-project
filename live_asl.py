@@ -95,6 +95,8 @@ def main():
 
     labels_dict = load_labels('words.txt')
 
+    threshold = 0.75
+
     # Initialize the webcam
     cap = cv2.VideoCapture(0)
 
@@ -104,7 +106,7 @@ def main():
 
     # codec and VideoWriter for saving the video
     fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-    out_video = cv2.VideoWriter("live_asl_demo.mp4", fourcc, 15, (frame_width, frame_height))
+    out_video = cv2.VideoWriter("live_asl_demo3.mp4", fourcc, 15, (frame_width, frame_height))
     frames_sequence = []
     full_sentence = ''
     while True:
@@ -122,7 +124,7 @@ def main():
         frames_sequence.append(landmark_array)
 
         if len(frames_sequence) == 70:
-            cv2.waitKey(1000)
+            #cv2.waitKey(1000)
             print(f'Predicting....')
             expanded_sequence = np.expand_dims(frames_sequence, axis=0)
             predictions_prob = model.predict(expanded_sequence)[0]
@@ -131,24 +133,25 @@ def main():
             top_three_ind = np.flip(top_three_ind)
             top_three_vals = predictions_prob[top_three_ind]
             print(f'top 3: {top_three_ind} with confidence {top_three_vals}')
-            if top_three_vals[0] > 0.8:
+            if top_three_vals[0] > threshold:
                 top_word = labels_dict.get(str(top_three_ind[0]), "?")
                 #print(predictions_prob)
                 full_sentence = full_sentence + str(top_word) + ' '
                 print(f'predicted word: {top_word}')
                 cv2.putText(frame, f'Predicted {top_word}', (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA)
                 cv2.imshow('ASL_Demo', frame)
-                cv2.waitKey(1000)
+                cv2.waitKey(2000)
             else:
                 cv2.putText(frame, f'Low confidence', (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA)
                 cv2.imshow('ASL_Demo', frame)
-                cv2.waitKey(1000)
+                cv2.waitKey(2000)
                 print('too low confidence.')
             print(f'sentence so far: {full_sentence}')
             frames_sequence.clear()
         else:
             # Display the resulting frame with prediction
-            cv2.putText(frame, f'Collecting Frames', (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA)
+            cv2.putText(frame, f'Collecting Frames', (10, 15), cv2.FONT_HERSHEY_SIMPLEX, 0.4, (255, 0, 0), 1, cv2.LINE_AA)
+            cv2.putText(frame, f'Sentence: {full_sentence}', (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.4, (0, 255, 0), 1, cv2.LINE_AA)
             cv2.imshow('ASL_Demo', frame)
 
         # Write frame to the output video file
